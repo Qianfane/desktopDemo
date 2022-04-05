@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './index.css'
-import { Popover, Button, Modal, Menu } from 'antd';
+import { Modal, Menu } from 'antd';
 import { FileOutlined } from '@ant-design/icons';
 
 function Folder(props: { data: any, deleteFolder: any }) {
@@ -12,29 +12,7 @@ function Folder(props: { data: any, deleteFolder: any }) {
   const [top, setTop] = useState(-999)
   const [width, ] = useState(180)
 
-  // ********************************
-  const text = <span>Title</span>;
-  const content = (
-    <div>
-      <p>Content</p>
-      <p>Content</p>
-    </div>
-  );
-
-  const buttonWidth = 70;
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
+  // 右键文件夹事件回调
   const handleContextMenu = (e: any) => {
     e.stopPropagation();
     e.preventDefault();
@@ -56,19 +34,30 @@ function Folder(props: { data: any, deleteFolder: any }) {
     setTop(curY);
   }
 
-  const handleClick = (a: { key: any }) => {
+  // 文件夹点击事件回调
+  const handleFolderClick = () => {
+    setIsMenuVisible(false)
+  }
+
+  // 确定事件回调
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  // 取消事件回调
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  // 文件夹打开或删除事件回调
+  const handleMenuClick = (a: { key: any }) => {
     if (a.key === '0') {
       // 打开文件夹
       setIsModalVisible(true)
-
     } else {
       // 删除文件夹
       deleteFolder(data);
     }
-  }
-
-  const handleFolderClick = () => {
-    setIsMenuVisible(false)
   }
 
   return (
@@ -84,7 +73,7 @@ function Folder(props: { data: any, deleteFolder: any }) {
       {/* 打开删除菜单 */}
       <div className="AppMenu" style={{ display: isMenuVisible ? 'block' : 'none' }}>
         <Menu
-          onClick={handleClick}
+          onClick={handleMenuClick}
           style={{ width, border: '1px solid #cacaca', position: 'absolute', left: left+'px', top: top+'px' }}
         >
           <Menu.Item key="0">

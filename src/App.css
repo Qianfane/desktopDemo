@@ -2,6 +2,15 @@
 
 .App {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   height: 100vh;
+}
+
+.App .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: white;
+}
+
+.App .ant-menu-item-selected {
+  color: black;
 }
